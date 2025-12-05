@@ -185,9 +185,11 @@ def check_environment():
 
 
 # 创建FastMCP服务器实例
-# 移除host和port配置，使用默认的stdio模式
+# 配置host和port以启用TCP模式
 app = FastMCP(
-    name="alipay-geo-memory"
+    name="alipay-geo-memory",
+    host="0.0.0.0",  # 绑定到所有网络接口
+    port=8000        # 监听8000端口
 )
 
 # 注册工具
@@ -244,4 +246,5 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # 当直接运行脚本时启动MCP服务
-    app.run()  # 使用默认的stdio模式
+    # 使用streamable-http传输方式以启用HTTP服务器
+    app.run(transport="streamable-http")
